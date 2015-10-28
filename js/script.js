@@ -20,7 +20,6 @@ var getRequest = (function(){
 		params.q = userInput;
 		$.getJSON(url, params, function(data){
 			var thumbnailData = data.items;
-			console.log(thumbnailData);
 			appendThumbnails(thumbnailData);	
 			$searchQuery.val('');
 		});		
@@ -34,12 +33,13 @@ var appendThumbnails = (function(){
 	return function(items){
 		var elements = [];
 		for(var i = 0; i < items.length; i++){
+			$thumbnailList.empty();
 			var $title = $('<h3>').append(items[i].snippet.title);
 			var $img = $('<img>').attr('src', items[i].snippet.thumbnails.medium.url);			
 			var youtubeVideoId = items[i].id.videoId;
 			var videoUrl = 'https://www.youtube.com/watch?v=' + youtubeVideoId;
 			var $youtubeLink = $("<a target='_blank'>").attr("href", videoUrl).append($img);			
-			var $div = $('<div>').append($youtubeLink, $title);
+			var $div = $('<div>').append($title, $youtubeLink);
 			elements.push($div);
 		}
 		$thumbnailList.append(elements);
