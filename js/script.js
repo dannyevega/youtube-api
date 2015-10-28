@@ -10,6 +10,8 @@ $form.submit(function(el){
 var getRequest = (function(){
 	var params = {
 		part: 'snippet',
+		chart: 'mostPopular',
+		maxResults: 25,
 		key: "AIzaSyAXZYwp-w3D5_n1NXgfGf1PffG3fxxBZvs"
 	};
 	var url = "https://www.googleapis.com/youtube/v3/search";
@@ -18,6 +20,7 @@ var getRequest = (function(){
 		params.q = userInput;
 		$.getJSON(url, params, function(data){
 			var thumbnailData = data.items;
+			console.log(thumbnailData);
 			appendThumbnails(thumbnailData);	
 			$searchQuery.val('');
 		});		
@@ -31,15 +34,22 @@ var appendThumbnails = (function(){
 	return function(items){
 		var elements = [];
 		for(var i = 0; i < items.length; i++){
-			var $p = $('<p>');
-			var $img = $('<img>').attr('src', items[i].snippet.thumbnails.medium.url);
-			$p.append($img);
-			elements.push($p);
+			var $title = $('<h3>').append(items[i].snippet.title);
+			var $img = $('<img>').attr('src', items[i].snippet.thumbnails.medium.url);			
+			var youtubeVideoId = items[i].id.videoId;
+			var videoUrl = 'https://www.youtube.com/watch?v=' + youtubeVideoId;
+			var $youtubeLink = $("<a target='_blank'>").attr("href", videoUrl).append($img);			
+			var $div = $('<div>').append($youtubeLink, $title);
+			elements.push($div);
 		}
-		$thumbnailList.html(elements);
-	}
+		$thumbnailList.append(elements);
+	};
 
 })();
+
+
+// COMMENTED FUNCTIONS ARE ORIGINAL FUNCTIONS I CREATED BEFORE I REFACTORED. LEAVING HERE SO I CAN SEE MY LOGIC BEFOREHAND. KEEP IT 100
+
 
 // function getRequest(userInput){
 // 	var params = {
