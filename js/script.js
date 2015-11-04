@@ -11,7 +11,7 @@ var getRequest = (function(){
 	var params = {
 		part: 'snippet',
 		chart: 'mostPopular',
-		maxResults: 25,
+		maxResults: 28,
 		key: "AIzaSyAXZYwp-w3D5_n1NXgfGf1PffG3fxxBZvs"
 	};
 	var url = "https://www.googleapis.com/youtube/v3/search";
@@ -34,12 +34,16 @@ var appendThumbnails = (function(){
 		var elements = [];
 		for(var i = 0; i < items.length; i++){
 			$thumbnailList.empty();
-			var $title = $('<h3>').append(items[i].snippet.title);
+			var subTitle = items[i].snippet.title;
+				if(subTitle.length > 25){
+					subTitle = subTitle.substr(0, 25) + "...";
+				}		
+			var $title = $('<h3>').append(subTitle);
 			var $img = $('<img>').attr('src', items[i].snippet.thumbnails.medium.url);			
 			var youtubeVideoId = items[i].id.videoId;
 			var videoUrl = 'https://www.youtube.com/watch?v=' + youtubeVideoId;
 			var $youtubeLink = $("<a target='_blank'>").attr("href", videoUrl).append($img);			
-			var $div = $('<div>').append($title, $youtubeLink);
+			var $div = $('<div class="video-item">').append($title, $youtubeLink);
 			elements.push($div);
 		}
 		$thumbnailList.append(elements);
