@@ -15,7 +15,6 @@ body {
 	margin: 0 auto;
 	background-color: #f22121;
 	opacity: 0.775;
-	border-bottom: 1px solid #DDD;
 	position: fixed;
 	width: 100%;
 	z-index: 9999;
