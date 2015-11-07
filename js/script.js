@@ -11,7 +11,7 @@ var getRequest = (function(){
 	var params = {
 		part: 'snippet',
 		chart: 'mostPopular',
-		maxResults: 28,
+		maxResults: 27,
 		key: "AIzaSyAXZYwp-w3D5_n1NXgfGf1PffG3fxxBZvs"
 	};
 	var url = "https://www.googleapis.com/youtube/v3/search";
